@@ -5,7 +5,7 @@ from service.genre import GenreService
 
 
 class MovieService:
-    def __int__(self, dao: MovieDAO, genre_service: GenreService,
+    def __init__(self, dao: MovieDAO, genre_service: GenreService,
                 director_service: DirectorService):
         self.dao = dao
         self.genre_service = genre_service
@@ -19,6 +19,9 @@ class MovieService:
 
     def get_by_director(self, did):
         return self.dao.get_by_director(did)
+
+    def get_by_year(self, year):
+        return self.dao.get_by_year(year)
 
     def create(self, data):
         movie = Movie(**data)
@@ -43,3 +46,6 @@ class MovieService:
         movie.director = self.director_service.get_one(movie.id)
 
         return self.dao.update(movie)
+
+    def delete(self,mid):
+        return self.dao.delete(mid)
