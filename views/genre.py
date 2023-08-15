@@ -15,10 +15,10 @@ class GenreVies(Resource):
 
     def get(self):
         movie = genre_service.get_all()
-        return genre_schema.dump(movie), 200
+        return genre_schemas.dump(movie), 200
 
 
-@genre_ns.route('/<int:mid>')
+@genre_ns.route('/<int:gid>')
 class GenreVies(Resource):
 
     def get(self, gid):

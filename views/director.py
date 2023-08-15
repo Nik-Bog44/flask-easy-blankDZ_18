@@ -5,7 +5,7 @@ from model.director import DirectorSchema
 
 director_ns = Namespace('directors')
 director_schema = DirectorSchema()
-movies_schemas = DirectorSchema(many=True)
+director_schemas = DirectorSchema(many=True)
 
 
 @director_ns.route('/')
@@ -13,10 +13,10 @@ class DirectorVies(Resource):
 
     def get(self):
         movie = director_service.get_all()
-        return director_schema.dump(movie), 200
+        return director_schemas.dump(movie), 200
 
 
-@director_ns.route('/<int:mid>')
+@director_ns.route('/<int:did>')
 class DirectorVies(Resource):
 
     def get(self, did):

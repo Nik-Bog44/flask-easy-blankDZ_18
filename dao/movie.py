@@ -33,7 +33,16 @@ class MovieDAO:
         self.session.delete(movie)
         self.session.commit()
 
-    def update(self, movie):
+    def update(self,mid):
+        movie = self.get_one(mid.get("id"))
+        movie.title = mid.get("title")
+        movie.description = mid.get("description")
+        movie.trailer = mid.get("trailer")
+        movie.year = mid.get("year")
+        movie.genre_id = mid.get("genre_id")
+        movie.director_id = mid.get("director_id")
+
+        self.session.add(movie)
         self.session.commit()
 
         return movie
