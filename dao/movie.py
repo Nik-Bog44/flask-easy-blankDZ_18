@@ -7,7 +7,7 @@ class MovieDAO:
         self.session = session
 
     def get_one(self, mid):
-        return self.session.query(Movie).filter(Movie.id == mid)
+        return self.session.query(Movie).get(mid)
 
     def get_all(self):
         return self.session.query(Movie).all()
@@ -33,14 +33,14 @@ class MovieDAO:
         self.session.delete(movie)
         self.session.commit()
 
-    def update(self,mid):
-        movie = self.get_one(mid.get("id"))
-        movie.title = mid.get("title")
-        movie.description = mid.get("description")
-        movie.trailer = mid.get("trailer")
-        movie.year = mid.get("year")
-        movie.genre_id = mid.get("genre_id")
-        movie.director_id = mid.get("director_id")
+    def update(self,mid, data):
+        movie = self.get_one(mid)
+        movie.title = data.get("title")
+        movie.description = data.get("description")
+        movie.trailer = data.get("trailer")
+        movie.year = data.get("year")
+        movie.genre_id = data.get("genre_id")
+        movie.director_id = data.get("director_id")
 
         self.session.add(movie)
         self.session.commit()
