@@ -39,6 +39,7 @@ class MovieDAO:
         movie.description = data.get("description")
         movie.trailer = data.get("trailer")
         movie.year = data.get("year")
+        movie.rating = data.get("rating")
         movie.genre_id = data.get("genre_id")
         movie.director_id = data.get("director_id")
 
