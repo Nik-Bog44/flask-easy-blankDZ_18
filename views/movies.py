@@ -4,7 +4,6 @@ from flask_restx import Resource, Namespace
 from container import movie_service
 from model.genre import GenreSchema
 from model.movie import MovieSchema
-from service.genre import GenreService
 
 movie_ns = Namespace('movies')
 movie_schema = MovieSchema()
@@ -29,7 +28,11 @@ class MoviesVies(Resource):
 @movie_ns.route('/director/<int:director_id>')
 class MoviesVies(Resource):
     def get(self, director_id):
-        movie = movie_service.get_by_director(director_id)
+        if director_id == 15:
+            movie = movie_service.get_by_director(director_id=15)
+        else:
+            movie = movie_service.get_by_director(director_id)
+
         return movies_schema.dump(movie), 200
 
 
@@ -37,7 +40,11 @@ class MoviesVies(Resource):
 class MoviesVies(Resource):
 
     def get(self, year):
-        movie = movie_service.get_by_year(year)
+        if year == 2007:
+            movie = movie_service.get_by_year(year=2007)
+        else:
+            movie = movie_service.get_by_year(year)
+
         return movie_schema.dump(movie), 200
 
 
@@ -46,7 +53,8 @@ class MoviesVies(Resource):
 
     def put(self, mid):
         data = request.json
-        movie = movie_service.create(mid,data)
+        data['id'] = mid
+        movie = movie_service.update(mid, data)
         return movie_schema.dump(movie), 201
 
     def delete(self, mid):

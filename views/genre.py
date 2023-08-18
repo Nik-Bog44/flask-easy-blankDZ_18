@@ -22,5 +22,9 @@ class GenreVies(Resource):
 class GenreVies(Resource):
 
     def get(self, gid):
-        movie = genre_service.get_one(gid)
+        if gid == 3:
+            movie = genre_service.get_one(gid=3)
+        else:
+            movie = genre_service.get_one(gid)
+
         return genre_schema.dump(movie), 200

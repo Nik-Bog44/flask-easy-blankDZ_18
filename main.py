@@ -16,19 +16,18 @@ def create_app(config: Config):
     return application
 
 
-def configure_app(app: Flask):
+def configure_app(app:Flask):
     db.init_app(app)
     db.create_all()
-    api = Api(app,prefix='/')
+    api = Api(app, prefix='/')
 
     api.add_namespace(movie_ns)
     api.add_namespace(director_ns)
     api.add_namespace(genre_ns)
 
 
+
 if __name__ == '__main__':
     app = create_app(Config())
-
     configure_app(app)
-
     app.run()
