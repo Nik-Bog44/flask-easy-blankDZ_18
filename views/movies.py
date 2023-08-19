@@ -16,7 +16,21 @@ genres_schema = GenreSchema(many=True)
 class MoviesVies(Resource):
 
     def get(self):
-        movie = movie_service.get_all()
+        director_id = request.args.get("director_id")
+        year = request.args.get("year")
+
+        if director_id:
+            if director_id == "15":
+                movie = movie_service.get_by_director(director_id=15)
+            else:
+                movie = movie_service.get_by_director(director_id)
+        elif year:
+            if year == "2007":
+                movie = movie_service.get_by_year(year=2007)
+            else:
+                movie = movie_service.get_by_year(year)
+        else:
+            movie = movie_service.get_all()
         return movies_schema.dump(movie), 200
 
     def post(self):
@@ -25,13 +39,18 @@ class MoviesVies(Resource):
         return movie_schema.dump(movie), 201
 
 
+@movie_ns.route('/<int:mid>')
+class MovieView(Resource):
+    def get(self, mid):
+        movie = movie_service.get_one(mid)
+
+        return movies_schema.dump(movie), 200
+
+
 @movie_ns.route('/director/<int:director_id>')
 class MoviesVies(Resource):
     def get(self, director_id):
-        if director_id == 15:
-            movie = movie_service.get_by_director(director_id=15)
-        else:
-            movie = movie_service.get_by_director(director_id)
+        movie = movie_service.get_by_director(director_id)
 
         return movies_schema.dump(movie), 200
 
@@ -40,10 +59,7 @@ class MoviesVies(Resource):
 class MoviesVies(Resource):
 
     def get(self, year):
-        if year == 2007:
-            movie = movie_service.get_by_year(year=2007)
-        else:
-            movie = movie_service.get_by_year(year)
+        movie = movie_service.get_by_year(year)
 
         return movie_schema.dump(movie), 200
 
