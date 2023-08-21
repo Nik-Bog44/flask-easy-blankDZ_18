@@ -20,6 +20,9 @@ class MovieService:
     def get_by_director(self, did):
         return self.dao.get_by_director(did)
 
+    def get_by_genre(self, gid):
+        return self.dao.get_by_genre(gid)
+
     def get_by_year(self, year):
         return self.dao.get_by_year(year)
 

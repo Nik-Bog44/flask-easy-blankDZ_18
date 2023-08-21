@@ -17,16 +17,19 @@ class MoviesVies(Resource):
 
     def get(self):
         director_id = request.args.get("director_id")
-        genre = request.args.get("genre_id")
+        genre_id = request.args.get("genre_id")
         year = request.args.get("year")
-        datas = {
-            "director_id": director_id,
-            "genre_id": genre,
-            "year": year,
-        }
-        movies_all = movie_service.get_all(datas)
 
-        return movies_schema.dump(movies_all), 200
+        if director_id:
+            movies_filtered = movie_service.get_by_director(director_id)
+        elif genre_id:
+            movies_filtered = movie_service.get_by_genre(genre_id)
+        elif year:
+            movies_filtered = movie_service.get_by_year(year)
+        else:
+            movies_filtered = movie_service.get_all()
+
+        return movies_schema.dump(movies_filtered), 200
 
     def post(self):
         data = request.json
